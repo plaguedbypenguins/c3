@@ -12,9 +12,9 @@ C3_ERRREMOTE = 2
 def_path = ''
 
 try:
-	def_path = os.environ[ 'C3_PATH' ]
+        def_path = os.environ[ 'C3_PATH' ]
 except KeyError:
-	if os.path.isfile('/usr/bin/cexec') and os.access('/usr/bin/cexec', os.X_OK):
-		def_path = '/usr/bin'
-	else:
-		def_path = '/opt/c3-' + repr(c3_version.c3_version_major)
+        if os.path.isfile('/usr/bin/cexec') and os.access('/usr/bin/cexec', os.X_OK):
+                def_path = '/usr/bin'
+        else:
+                def_path = '/opt/c3-' + repr(c3_version.c3_version_major)

@@ -1,52 +1,52 @@
 # $Id: c3_except.py 186 2011-01-21 23:07:00Z tjn $
 
 class c3_except(Exception):
-	description = ""
-	last = ""
+        description = ""
+        last = ""
 
-	def __init__(self, string, name):
-		self.description = string
-		self.last = name
+        def __init__(self, string, name):
+                self.description = string
+                self.last = name
 
 
 class parse_error( c3_except ):
-	pass
+        pass
 
 class bad_cluster_name( parse_error ):
-	pass
+        pass
 
 class no_more_clusters( c3_except ):
-	pass
+        pass
 
 class invalid_head_node( parse_error ):
-	pass
+        pass
 
 class invalid_cluster_block( parse_error ):
-	pass
+        pass
 
 class no_head_node( c3_except ):
-	pass
+        pass
 
 class invalid_node( parse_error ):
-	pass
+        pass
 
 class end_of_cluster( c3_except ):
-	pass
+        pass
 
 class internel_error( c3_except ):
-	pass
+        pass
 
 class indirect_cluster( parse_error ):
-	pass
+        pass
 
 class not_in_range( parse_error ):
-	pass
+        pass
 
 class end_of_option( c3_except ):
-	pass
+        pass
 
 class bad_string( parse_error ):
-	pass
+        pass
 
 class end_of_opt_string( bad_string ):
-	pass
+        pass
