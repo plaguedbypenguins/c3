@@ -245,7 +245,7 @@ try:
 
                         if not pipe_output:
                                 line =  "************************* " + cluster + " *************************\n"
-                                os.write( pipe_list_outer[-1][1], line )
+                                os.write( pipe_list_outer[-1][1], line.encode('utf-8') )
 
                         ############ get machine names #############################
                         try: 
@@ -259,7 +259,7 @@ try:
                                 int_ip = ""
                         except KeyError:
                                 print("Cluster ", cluster, " is not in the configuration file.")
-                                os.write( pipe_list_outer[-1][1], '\0' )
+                                os.write( pipe_list_outer[-1][1], '\0'.encode('utf-8') )
                                 os._exit(c3_config.C3_ERRLOCAL)
                         try:
                                 ext_ip = socket.gethostbyname( cluster_from_file[cluster]['external'] )
@@ -286,7 +286,7 @@ try:
                                 if not dryrun:
                                         if not pipe_output:
                                                 line =  "--------- " + cluster + "---------\n" 
-                                                os.write( pipe_list_outer[-1][1], line )
+                                                os.write( pipe_list_outer[-1][1], line.encode('utf-8') )
                                 string_to_execute = transport + " " + "-l " + username + " " + ext_ip + " \'" + command + "\'"
                                 if dryrun:
                                         print(string_to_execute)
@@ -297,14 +297,15 @@ try:
                                         #temp = proc.wait()
                                         p = Popen(string_to_execute, shell=True, 
                                                           stdout=PIPE, stderr=STDOUT, close_fds=True)
-                                        string_in = p.communicate()[0]
+                                        string_in = p.communicate()[0].decode('utf-8')
                                         temp = p.wait()
                                         if( temp != 0 ):
                                                 returncode = c3_config.C3_ERRREMOTE
                                         if pipe_output:
                                                 regex = re.compile(r"^.", re.MULTILINE)
                                                 string_in = regex.sub(cluster + " " + ext_ip_name + ": " + "\g<0>", string_in)
-                                        os.write(pipe_list_outer[-1][1], string_in + "\0" )
+                                        os.write(pipe_list_outer[-1][1], string_in.encode('utf-8') )
+                                        os.write(pipe_list_outer[-1][1], '\0'.encode('utf-8') )
                                         
                         elif cluster_from_file[cluster]['external']: # if a direct cluster
                                 if ext_ip == local_ip or int_ip == local_ip: # if a local cluster
@@ -323,7 +324,8 @@ try:
                                                                         if pid == 0:
                                                                                 node_name = cluster_from_file[cluster]['nodes'][node].name
                                                                                 if not pipe_output:
-                                                                                        os.write( pipe_list[-1][1], "--------- " + node_name + "---------\n" )
+                                                                                        a = "--------- " + node_name + "---------\n"
+                                                                                        os.write( pipe_list[-1][1], a.encode('utf-8') )
                                                                                 string_to_execute = transport + " " + "-l " + username + " " + node_name + " \'" +  command + " \'"
                                                                                 if dryrun:
                                                                                         print(string_to_execute)
@@ -334,17 +336,17 @@ try:
                                                                                         #temp = proc.wait()
                                                                                         p = Popen(string_to_execute, shell=True, 
                                                                                                           stdout=PIPE, stderr=STDOUT, close_fds=True)
-                                                                                        string_in = p.communicate()[0]
+                                                                                        string_in = p.communicate()[0].decode('utf-8')
                                                                                         temp = p.wait()
                                                                                         if( temp != 0 ):
                                                                                                 returncode = c3_config.C3_ERRREMOTE
-                                                                                        if pipe_output:	
+                                                                                        if pipe_output:
                                                                                                 regex = re.compile(r"^.", re.MULTILINE)
                                                                                                 string_in = regex.sub(cluster + " " + node_name + ": " + "\g<0>", string_in)
                                                                                                 if len (string_in) == 0:
                                                                                                         string_in = cluster + " " + node_name+ ":\n"
-                                                                                        os.write( pipe_list[-1][1], string_in )
-                                                                                        os.write( pipe_list[-1][1], '\0' )
+                                                                                        os.write( pipe_list[-1][1], string_in.encode('utf-8') )
+                                                                                        os.write( pipe_list[-1][1], '\0'.encode('utf-8') )
                                                                                 os._exit(returncode)
                                                                         pidlist.append(pid)
                                                         except IndexError:
@@ -359,7 +361,8 @@ try:
                                                                 if pid == 0:
                                                                         node_name = node.name
                                                                         if not pipe_output:
-                                                                                os.write( pipe_list[-1][1], "--------- " + node_name + "---------\n" )
+                                                                                a = "--------- " + node_name + "---------\n"
+                                                                                os.write( pipe_list[-1][1], a.encode('utf-8') )
                                                                         string_to_execute = transport + " " + "-l " + username + " " + node_name + " \'" +  command + " \'"
                                                                         if dryrun:
                                                                                 print(string_to_execute)
@@ -370,7 +373,7 @@ try:
                                                                         #temp = proc.wait()
                                                                         p = Popen(string_to_execute, shell=True, 
                                                                                           stdout=PIPE, stderr=STDOUT, close_fds=True)
-                                                                        string_in = p.communicate()[0]
+                                                                        string_in = p.communicate()[0].decode('utf-8')
                                                                         temp = p.wait()
                                                                         if( temp != 0 ):
                                                                                 returncode = c3_config.C3_ERRREMOTE
@@ -379,18 +382,18 @@ try:
                                                                                 string_in = regex.sub(cluster + " " + node_name + ": " + "\g<0>", string_in)
                                                                                 if len (string_in) == 0:
                                                                                         string_in = cluster + " " + node_name+ ":\n"
-                                                                        os.write( pipe_list[-1][1], string_in )
-                                                                        os.write( pipe_list[-1][1], '\0' )
+                                                                        os.write( pipe_list[-1][1], string_in.encode('utf-8') )
+                                                                        os.write( pipe_list[-1][1], '\0'.encode('utf-8') )
                                                                         os._exit(returncode)
                                                                         
                                                                 pidlist.append(pid)
                                         for pipe in pipe_list:
-                                                line = os.read( pipe[0], 1024)
+                                                line = os.read( pipe[0], 1024).decode('utf-8')
                                                 while line[-1] != '\0':
-                                                        line = line + os.read( pipe[0], 1024)
+                                                        line = line + os.read( pipe[0], 1024).decode('utf-8')
                                                 line=line[:-1]
-                                                os.write( pipe_list_outer[-1][1], line )		
-                                        os.write( pipe_list_outer[-1][1], '\0' )
+                                                os.write( pipe_list_outer[-1][1], line.encode('utf-8') )
+                                        os.write( pipe_list_outer[-1][1], '\0'.encode('utf-8') )
                                 else: # remote cluster
                                         if ext_ip == "": # error condition
                                                 print("Can not resolve ", cluster_from_file[cluster]['external'])
@@ -455,12 +458,12 @@ try:
                                                         #temp = proc.wait()
                                                         p = Popen(string_to_execute, shell=True, 
                                                                           stdout=PIPE, stderr=STDOUT, close_fds=True)
-                                                        string_in = p.communicate()[0]
+                                                        string_in = p.communicate()[0].decode('utf-8')
                                                         temp = p.wait()
                                                         if( temp != 0 ):
                                                                 returncode = c3_config.C3_ERRREMOTE
-                                                        os.write( pipe_list_outer[-1][1], string_in )
-                                                        os.write( pipe_list_outer[-1][1], '\0' )
+                                                        os.write( pipe_list_outer[-1][1], string_in.encode('utf-8') )
+                                                        os.write( pipe_list_outer[-1][1], '\0'.encode('utf-8') )
                                                         # remove temporary file
                                                 string_to_execute = transport + " " + "-l " + username + " " + ext_ip + " /bin/rm -f " + filename
                                                 if dryrun:
@@ -474,7 +477,7 @@ try:
                                                         # is local you would generate a circular reference
                                         print("error local cluster")
                                         sys.stdout.flush()
-                                        os.write( pipe_list_outer[-1][1], '\0' )
+                                        os.write( pipe_list_outer[-1][1], '\0'.encode('utf-8') )
                                 else: # remote indirect cluster
                                         if int_ip == "": # error condition
                                                 print("Can not resolve hostname ", cluster_from_file[cluster]['internal'])
@@ -498,12 +501,12 @@ try:
                                                         #temp = proc.wait()
                                                         p = Popen(string_to_execute, shell=True, 
                                                                           stdout=PIPE, stderr=STDOUT, close_fds=True)
-                                                        string_in = p.communicate()[0]
+                                                        string_in = p.communicate()[0].decode('utf-8')
                                                         temp = p.wait()
                                                         if( temp != 0 ):
                                                                 returncode = c3_config.C3_ERRREMOTE
-                                                        os.write( pipe_list_outer[-1][1], string_in )
-                                                        os.write( pipe_list_outer[-1][1], '\0' )
+                                                        os.write( pipe_list_outer[-1][1], string_in.encode('utf-8') )
+                                                        os.write( pipe_list_outer[-1][1], '\0'.encode('utf-8') )
                                                         
                         for pid in pidlist:
                                 pid, code = os.waitpid(pid,0)
@@ -515,17 +518,17 @@ try:
         if not dryrun:
                 output = ""
                 for pipe in pipe_list_outer:
-                        line = os.read( pipe[0], 1024 )
+                        line = os.read( pipe[0], 1024 ).decode('utf-8')
                         while line[-1] != '\0':
-                                line = line + os.read( pipe[0], 1024 )
+                                line = line + os.read( pipe[0], 1024 ).decode('utf-8')
                         output = output + line[:-1]
                 try:
                         n = len(output)
                         iw = 0
                         while n != iw:
                                 try:
-                                        slice = output[iw:n]
-                                        nw = os.write(sys.stdout.fileno(), slice)
+                                        slice_var = output[iw:n]
+                                        nw = os.write(sys.stdout.fileno(), slice_var.encode('utf-8'))
                                         iw = iw + nw
                                 except OSError as err:
                                         import errno
