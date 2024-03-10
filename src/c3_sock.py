@@ -56,7 +56,7 @@ class c3_sock:
 			if char_in != "":
 				time_start = time.time()
 			if char_in == "" and time_elapsed > self.timeout:
-				raise 'time_out'
+				raise Exception('time_out')
 
 		# try and read the message from the pipe in as large a chunk as possible, loop
 		# untill stated length is reached
@@ -71,7 +71,7 @@ class c3_sock:
 				time_elapsed = 0
 				buffer = new_buffer
 			elif time_elapsed > self.timeout:
-				raise 'time_out'
+				raise Exception('time_out')
 			else:
 				time_elapsed = time.time() - time_start
 		# return message received through pipe		
@@ -107,7 +107,7 @@ class client_sock( c3_sock ):
 
 	def __init__(self):
 		if sys.stdout == None and sys.stdin == None:
-			raise 'single client only'
+			raise Exception('single client only')
 		self.output_pipe = sys.stdout
 		self.input_pipe = sys.stdin
 		sys.stdout = None
