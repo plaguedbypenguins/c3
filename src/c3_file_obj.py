@@ -331,5 +331,3 @@ class cluster_def:
 		if self.c_name == "":
 			raise no_cluster_name( "read in a cluster before useing", "no cluster read yet" )
 		return self.c_name
-
-# vim:tabstop=4:shiftwidth=4:noexpandtab:textwidth=76

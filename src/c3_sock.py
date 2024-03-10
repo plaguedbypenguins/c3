@@ -118,5 +118,3 @@ class client_sock( c3_sock ):
 	def __del__( self ):
 		sys.stdin = self.input_pipe
 		sys.stdout = self.output_pipe
-
-# vim:tabstop=4:shiftwidth=4:noexpandtab:textwidth=76

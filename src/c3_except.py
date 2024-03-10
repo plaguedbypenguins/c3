@@ -50,5 +50,3 @@ class bad_string( parse_error ):
 
 class end_of_opt_string( bad_string ):
 	pass
-
-# vim:tabstop=4:shiftwidth=4:noexpandtab:textwidth=76

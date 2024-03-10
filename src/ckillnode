@@ -134,5 +134,3 @@ while( <PS_OUTPUT> ) {
 }
 
 exit( 0 );
-
-# vim:tabstop=4:shiftwidth=4:noexpandtab:textwidth=76

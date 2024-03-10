@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # $Id: crm 186 2011-01-21 23:07:00Z tjn $
 
 import c3_config
@@ -448,5 +448,3 @@ except KeyboardInterrupt:
 	print("Keyboard interrupt\n")
 
 sys.exit(code)
-
-# vim:tabstop=4:shiftwidth=4:noexpandtab:textwidth=76

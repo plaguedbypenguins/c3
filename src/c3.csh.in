@@ -11,5 +11,3 @@ if ( $?MANPATH == 0 ) then
 else
     setenv MANPATH "${MANPATH}:@prefix@/doc/man/"
 endif
-
-# vim:tabstop=4:shiftwidth=4:noexpandtab:textwidth=76

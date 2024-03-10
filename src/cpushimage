@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # $Id: cpushimage 205 2011-01-26 03:58:33Z tjn $
 
 import c3_config
@@ -385,5 +385,3 @@ except KeyboardInterrupt:
         print("Keyboard interrupt\n")
 
 system.exit(returncode)
-
-# vim:tabstop=4:shiftwidth=4:noexpandtab:textwidth=76

@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # $Id: cexecs 186 2011-01-21 23:07:00Z tjn $
 
 import c3_config
@@ -406,5 +406,3 @@ try:
 
 except KeyboardInterrupt:
 	print("keyboard Interrupt\n")
-
-# vim:tabstop=4:shiftwidth=4:noexpandtab:textwidth=76

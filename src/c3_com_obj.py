@@ -158,5 +158,3 @@ class c3_command_line:
 	# returns the rest of line (usually for the end of the command)
 	def rest_of_command( self ):
 		return self.line	
-
-# vim:tabstop=4:shiftwidth=4:noexpandtab:textwidth=76
